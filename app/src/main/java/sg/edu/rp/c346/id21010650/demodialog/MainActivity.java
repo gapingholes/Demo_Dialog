@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity {
 
     Button buttonDemo1, buttonDemo2, buttonDemo3, buttonExercise3, buttonDemo4, buttonDemo5;
@@ -129,15 +131,19 @@ public class MainActivity extends AppCompatActivity {
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View viewDialog = inflater.inflate(R.layout.exercise3input,null);
 
-                final EditText etInput = viewDialog.findViewById(R.id.editTextNumber1);
+                final EditText etInput1 = viewDialog.findViewById(R.id.editTextNumber1);
+                final EditText etInput2 = viewDialog.findViewById(R.id.editTextNumber2);
                 AlertDialog.Builder myBuilder = new AlertDialog.Builder(MainActivity.this);
                 myBuilder.setView(viewDialog);
                 myBuilder.setTitle("Exercise 3");
                 myBuilder.setPositiveButton("OK",new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog,int which) {
+                        String no1 = etInput1.getText().toString();
+                        String no2 = etInput2.getText().toString();
+                        int sum = Integer.parseInt(no1) + Integer.parseInt(no2);
                         String message = "The sum is ";
-                        textViewExercise3.setText(message);
+                        textViewExercise3.setText(message + sum);
                     }
                 });
                 myBuilder.setNegativeButton("CANCEL",null);
@@ -153,9 +159,10 @@ public class MainActivity extends AppCompatActivity {
                 DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view,int year,int monthOfYear,int dayOfMonth) {
-                        buttonDemo4.setText("Date: " + dayOfMonth + "/" + (monthOfYear+1) + "/" + year);
+                        textViewDemo4.setText("  Date: " + dayOfMonth + "/" + (monthOfYear+1) + "/" + year);
                     }
                 };
+
                 // Create the Date Picker Dialog to show the current date when it first appears
                 Calendar now = Calendar.getInstance();
                 int year = now.get(Calendar.YEAR);
@@ -163,11 +170,11 @@ public class MainActivity extends AppCompatActivity {
                 int day = now.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog myDateDialog = new DatePickerDialog(MainActivity.this,
                         myDateListener, year, month, day);
-
                 myDateDialog.show();
             }
         });
 
+        TimePickerDialog.OnTimeSetListener myTimeListener = null;
         buttonDemo5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -188,6 +195,6 @@ public class MainActivity extends AppCompatActivity {
             int hourOfDay = now.get(Calendar.HOUR_OF_DAY);  // Current Hour
             int minute = now.get(Calendar.MINUTE);  // Current Minute
             TimePickerDialog myTimeDialog = new TimePickerDialog(MainActivity.this,
-                    myTimeListener, hourOfDay, minute, true);
+                    null, hourOfDay, minute, true);
 
         });}}
